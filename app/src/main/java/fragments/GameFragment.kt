@@ -81,6 +81,16 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun roll() {
+    private fun playTurn() {
     }
+
+    private fun spinTheWheel() {
+    }
+
+    private fun pickLetter() {
+    }
+
+    private fun endGame() {
+    }
+
 }
