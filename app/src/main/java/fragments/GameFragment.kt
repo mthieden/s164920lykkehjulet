@@ -24,6 +24,7 @@ class GameFragment : Fragment() {
     var end_text = "Tillykke du har Vundet"
     var secret_word = ""
     var shown_word = ""
+    var chosen_letters = ""
     var points = 0
     var lives = 5
 
@@ -60,8 +61,11 @@ class GameFragment : Fragment() {
         val categories = JSONcategory.keys().asSequence().toList()
         val data: String? = arguments?.getString("data")
 
-        if (data?.length ?: 0 >= 1)
-            secretWord.text = hideWord(data.toString())
+        if (data?.length ?: 0 >= 1) {
+            secret_word = data.toString()
+            shown_word = hideWord(data.toString())
+            secretWord.text = shown_word
+        }
         else
             secretWord.text = "FEJL"
 
@@ -77,8 +81,8 @@ class GameFragment : Fragment() {
         }
 
         btn_roll.setOnClickListener {
-            btn_nav.visibility=View.VISIBLE
-            btn_roll.visibility=View.INVISIBLE
+            pickLetter("hai")
+            endGame()
         }
 
         btn_nav.setOnClickListener {
@@ -92,14 +96,29 @@ class GameFragment : Fragment() {
     }
 
     private fun spinTheWheel() {
+        val x = (0..20).random()
+        when (x) {
+            in 1..3 -> print("2000 point")
+            in 4..8 -> print("1000 point")
+            in 9..5 -> print("500 point")
+            16 -> print("extra turn")
+            in 17..19 -> print("miss turn")
+            20 -> print("Bankrupt")
+            else -> print("none of the above")
+        }
     }
 
-    private fun hideWord(word: String): CharSequence? {
+    private fun hideWord(word: String): String {
         return word.replace("\\w".toRegex(), "?")
     }
 
-    private fun pickLetter() {
-
+    private fun pickLetter(letter:String) {
+        secret_word.contains(letter, ignoreCase = true)
+        chosen_letters += letter
+        val regex =("[^ "+chosen_letters+"]").toRegex(RegexOption.IGNORE_CASE)
+        val result = secret_word.replace(regex,"?")
+        secretWord.text = result
+        shown_word=result
     }
 
     private fun endGame() {
