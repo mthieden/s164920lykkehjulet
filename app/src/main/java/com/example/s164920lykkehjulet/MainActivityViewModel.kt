@@ -8,7 +8,7 @@ class MainActivityViewModel : ViewModel(){
     private val _secretWord = MutableLiveData("")
     val secretWord: LiveData<String> = _secretWord
 
-    private val _categories = MutableLiveData("{'film':['dune', 'batman'],'sport':['fodbold']}")
+    private val _categories = MutableLiveData("{\'Film\':[\'Dune\', \'Batman\'],\'Sport\':[\'Fodbold\'], \'Personer\':[\'Hans Christian Andersen\']}")
     val categories: LiveData<String> = _categories
 
     private val _letters = MutableLiveData("{'A':'HIDDEN'," +
