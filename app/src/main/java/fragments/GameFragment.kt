@@ -21,10 +21,11 @@ class GameFragment : Fragment() {
     private val model: MainActivityViewModel by viewModels()
     lateinit var btn_nav: Button
     lateinit var btn_roll: Button
-    var end_text = "Tillykke du har Vundet"
+    var end_text = "Tillykke du har Vundet "
     var secret_word = ""
     var shown_word = ""
     var chosen_letters = ""
+    var totalPoints = 0
     var points = 0
     var lives = 5
 
@@ -81,8 +82,8 @@ class GameFragment : Fragment() {
         }
 
         btn_roll.setOnClickListener {
-            pickLetter("hai")
-            endGame()
+            pickLetter("h")
+            playTurn()
         }
 
         btn_nav.setOnClickListener {
@@ -93,18 +94,54 @@ class GameFragment : Fragment() {
     }
 
     private fun playTurn() {
+        spinTheWheel()
+        if(lives<=0)
+        {
+            endGame()
+        }
+        else if("?" !in shown_word)
+        {
+            endGame()
+        }
     }
 
     private fun spinTheWheel() {
-        val x = (0..20).random()
+        val x = (1..20).random()
         when (x) {
-            in 1..3 -> print("2000 point")
-            in 4..8 -> print("1000 point")
-            in 9..5 -> print("500 point")
-            16 -> print("extra turn")
-            in 17..19 -> print("miss turn")
-            20 -> print("Bankrupt")
-            else -> print("none of the above")
+            in 1..3 -> {
+                gameText.text="Gæt et bogstav for 2000 point"
+                points= 2000
+                // TODO add active boolean
+            }
+            in 4..8 -> {
+                gameText.text="Gæt et bogstav for 1000 point"
+                points= 1000
+
+            }
+            in 9..15 -> {
+                gameText.text="Gæt et bogstav for 500 point"
+                points= 500
+
+            }
+            16 -> {
+                lives++
+                gameText.text="extra turn"
+                setLives()
+
+            }
+            in 17..19 -> {
+                lives--
+                gameText.text="miss turn"
+                setLives()
+            }
+            20 -> {
+                gameText.text="Bankrupt"
+                totalPoints = 0
+                setPoints()
+            }
+            else -> {
+                gameText.text="FEJL! :" + x.toString()
+            }
         }
     }
 
@@ -113,17 +150,49 @@ class GameFragment : Fragment() {
     }
 
     private fun pickLetter(letter:String) {
-        secret_word.contains(letter, ignoreCase = true)
+        val hit = secret_word.contains(letter, ignoreCase = true)
         chosen_letters += letter
         val regex =("[^ "+chosen_letters+"]").toRegex(RegexOption.IGNORE_CASE)
         val result = secret_word.replace(regex,"?")
         secretWord.text = result
         shown_word=result
+        if (hit)
+        {
+            // TODO: add text for when a letter is hit
+            totalPoints +=points
+            setPoints()
+        }
+        else
+        {
+            // TODO: add text for miss
+            lives--
+            setLives()
+        }
+
     }
 
     private fun endGame() {
+        // TODO: add text
+        gameText.text="END"
+        if(lives == 0)
+        {
+            end_text = "Du Tabte Spillet :'("
+        }
+        else
+        {
+            end_text += " Antal point: " + totalPoints
+        }
         btn_nav.visibility=View.VISIBLE
         btn_roll.visibility=View.INVISIBLE
     }
+
+    private fun setPoints() {
+        pointText.text = "Points: " + totalPoints
+    }
+
+    private fun setLives() {
+        livesText.text = "Antal liv: "+ lives
+    }
+
 
 }
