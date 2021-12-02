@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.s164920lykkehjulet.MainActivityViewModel
@@ -19,10 +18,17 @@ import views.RecyclerViewAdapter
 
 class GameFragment : Fragment() {
 
+    private val model: MainActivityViewModel by viewModels()
     lateinit var btn_nav: Button
     lateinit var btn_roll: Button
     var end_text = "Tillykke du har Vundet"
-    private val model: MainActivityViewModel by viewModels()
+    var secret_word = ""
+    var shown_word = ""
+    var points = 0
+    var lives = 5
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +38,12 @@ class GameFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_game, container, false)
         Cast(view)
 
+        /*
         val nameObserver = Observer<String> { newName ->
             secretWord.text = newName
         }
         model.secretWord.observe(viewLifecycleOwner, nameObserver)
-
+        */
         return view
     }
 
@@ -54,7 +61,7 @@ class GameFragment : Fragment() {
         val data: String? = arguments?.getString("data")
 
         if (data?.length ?: 0 >= 1)
-            secretWord.text = data
+            secretWord.text = hideWord(data.toString())
         else
             secretWord.text = "FEJL"
 
@@ -87,10 +94,17 @@ class GameFragment : Fragment() {
     private fun spinTheWheel() {
     }
 
+    private fun hideWord(word: String): CharSequence? {
+        return word.replace("\\w".toRegex(), "?")
+    }
+
     private fun pickLetter() {
+
     }
 
     private fun endGame() {
+        btn_nav.visibility=View.VISIBLE
+        btn_roll.visibility=View.INVISIBLE
     }
 
 }
