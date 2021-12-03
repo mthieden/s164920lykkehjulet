@@ -129,17 +129,17 @@ class GameFragment : Fragment() {
             }
             16 -> {
                 lives++
-                gameText.text="extra turn"
+                gameText.text="+Ekstra liv!"
                 setLives()
 
             }
             in 17..19 -> {
                 lives--
-                gameText.text="miss turn"
+                gameText.text="Bang, Du mistede et liv!"
                 setLives()
             }
             20 -> {
-                gameText.text="Bankrupt"
+                gameText.text="Bankerot, du mistede alle dine point"
                 totalPoints = 0
                 setPoints()
             }
@@ -156,7 +156,7 @@ class GameFragment : Fragment() {
     private fun pickLetter(letter:String) {
         val hit = secret_word.contains(letter, ignoreCase = true)
         chosen_letters += letter
-        val regex =("[^ "+chosen_letters+"]").toRegex(RegexOption.IGNORE_CASE)
+        val regex =("[^ $chosen_letters]").toRegex(RegexOption.IGNORE_CASE)
         val result = secret_word.replace(regex,"?")
         secretWord.text = result
         shown_word=result
@@ -166,12 +166,12 @@ class GameFragment : Fragment() {
             }
             hit -> {
 
-                gameText.text="\""+ letter +"\" er Korrekt"
+                gameText.text= "\"$letter\" er Korrekt"
                 totalPoints +=points
                 setPoints()
             }
             else -> {
-                gameText.text="\""+ letter +"\" er Forkert"
+                gameText.text= "\"$letter\" er Forkert"
                 lives--
                 setLives()
             }
@@ -193,11 +193,11 @@ class GameFragment : Fragment() {
     }
 
     private fun setPoints() {
-        pointText.text = "Points: " + totalPoints
+        pointText.text = "Points: $totalPoints"
     }
 
     private fun setLives() {
-        livesText.text = "Antal liv: "+ lives
+        livesText.text = "Antal liv: $lives"
     }
 
 
