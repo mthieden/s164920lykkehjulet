@@ -4,20 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.s164920lykkehjulet.MainActivityViewModel
 import com.example.s164920lykkehjulet.R
-import kotlinx.android.synthetic.main.custom_view.view.*
+import kotlinx.android.synthetic.main.view_letter.view.*
 
-class RecyclerViewAdapter(private val colors: List<String>,
-                          private val viewModel: MainActivityViewModel )
-    : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class LetterRecyclerViewAdapter(private val letters: List<String>,
+                                private val viewModel: MainActivityViewModel )
+    : RecyclerView.Adapter<LetterRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflate the custom view from xml layout file
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.custom_view,parent,false)
+            .inflate(R.layout.view_letter,parent,false)
 
         // return the view holder
         return ViewHolder(view)
@@ -27,11 +26,11 @@ class RecyclerViewAdapter(private val colors: List<String>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // display the current color
-        holder.color.text = colors[position]
+        holder.letter.text = letters[position]
         holder.itemView.setOnClickListener {
             if(viewModel.buttonBool.value == true)
             {
-                viewModel.guessLetter.value=colors[position]
+                viewModel.guessLetter.value=letters[position]
                 it.visibility=View.INVISIBLE
                 viewModel.buttonBool.value =false
             }
@@ -41,12 +40,12 @@ class RecyclerViewAdapter(private val colors: List<String>,
 
     override fun getItemCount(): Int {
         // number of items in the data set held by the adapter
-        return colors.size
+        return letters.size
     }
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val color: TextView = itemView.tvColor
+        val letter: TextView = itemView.letterButton
     }
 
 

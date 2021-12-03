@@ -3,12 +3,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.s164920lykkehjulet.MainActivityViewModel
 import com.example.s164920lykkehjulet.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
@@ -20,7 +17,6 @@ class HomeFragment : Fragment() {
     private lateinit var  JSONString : String
     private lateinit var JSONcategory : JSONObject
     private lateinit var categories : List<String>
-    private val model: MainActivityViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +30,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val email =  model.categories.value
-        var JSONcategory = JSONObject(email)
+        var JSONcategory = JSONObject(view.context.getString(R.string.category_json))
         val categories = JSONcategory.keys().asSequence().toList()
 
         val layoutManager = LinearLayoutManager(
@@ -51,8 +46,5 @@ class HomeFragment : Fragment() {
         val adapter = CategoryRecyclerViewAdapter(categories).apply {
             recyclerView.adapter = this
         }
-
-
     }
-
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -16,7 +15,7 @@ import com.example.s164920lykkehjulet.R
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.android.synthetic.main.fragment_home.recyclerView
 import org.json.JSONObject
-import views.RecyclerViewAdapter
+import views.LetterRecyclerViewAdapter
 
 class GameFragment : Fragment() {
 
@@ -61,9 +60,9 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val email =  model.letters.value
-        var JSONcategory = JSONObject(email)
-        val categories = JSONcategory.keys().asSequence().toList()
+        val categories = listOf<String>("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Æ", "Ø", "Å")
+
+
         val data: String? = arguments?.getString("data")
 
         if (data?.length ?: 0 >= 1) {
@@ -81,7 +80,7 @@ class GameFragment : Fragment() {
             // specify the layout manager for recycler view
             recyclerView.layoutManager = this
         }
-        val adapter = RecyclerViewAdapter(categories, model).apply {
+        val adapter = LetterRecyclerViewAdapter(categories, model).apply {
             recyclerView.adapter = this
         }
 
@@ -176,16 +175,19 @@ class GameFragment : Fragment() {
                 setLives()
             }
         }
+        points=0
     }
 
     private fun endGame() {
-        gameText.text="Spillet er slut, tryk på videre for at afslutte"
+
         if(lives <= 0)
         {
+            gameText.text= gameText.text.toString() + "\nSpillet er slut, tryk på videre for at afslutte"
             end_text = "Du Tabte Spillet :'("
         }
         else
         {
+            gameText.text="Spillet er slut, tryk på videre for at afslutte"
             end_text += " Antal point: " + totalPoints
         }
         btn_nav.visibility=View.VISIBLE

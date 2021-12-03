@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.s164920lykkehjulet.R
-import kotlinx.android.synthetic.main.category_view.view.*
+import kotlinx.android.synthetic.main.view_category.view.*
 import org.json.JSONObject
 import kotlin.random.Random
 
@@ -21,7 +21,7 @@ class CategoryRecyclerViewAdapter(private val categories: List<String>)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflate the custom view from xml layout file
         val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.category_view,parent,false)
+            .inflate(R.layout.view_category,parent,false)
         // return the view holder
         return ViewHolder(view)
     }

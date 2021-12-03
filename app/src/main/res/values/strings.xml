@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">s164920lykkehjulet</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="str_list_search">ali, reza, mvvm, nav, android, alireza, mmd, mvp, kotlin, java, python, telegram, api, android 10, android 11, android studio</string>
     <string name="start_text">Vælg kategori:</string>
-    <string name="category_json">{\'Film\':[\'Dune\', \'Batman\'],\'Sport\':[\'Fodbold\'], \'Personer\':[\'Hans Christian Andersen\']}</string>
+    <string name="category_json">   {\'Film\':[\'En Verden Udenfor\', \'Gøgereden\', \'Gøgereden\'],
+                                    \'Sport\':[\'Fodbold\'],
+                                    \'Personer\':[\'Hans Christian Andersen\', \'Sidney Lee\', \'Lars Larsen\', \'alexander nevsky\'],
+                                    \'Mad\':[\'PizzaBurger fra dr Oetker\'],
+                                    \'Geografi\':[\'Danmark\', \'Sverige\', \'Sovjetunionen\'],
+                                    \'Historie\':[\'Det Stockholmske Blodbad\', \'Slaget ved Reden\'],
+                                    \'Familie\':[\'Søster\', \'Bror\',\'Far\', \'Mor\']}</string>
 </resources>

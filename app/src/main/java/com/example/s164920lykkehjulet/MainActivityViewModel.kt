@@ -11,40 +11,4 @@ class MainActivityViewModel : ViewModel(){
     private var _buttonBool = MutableLiveData(false)
     var buttonBool: MutableLiveData<Boolean> = _buttonBool
 
-
-    private val _categories = MutableLiveData("{\'Film\':[\'Dune\', \'Batman\'],\'Sport\':[\'Fodbold\'], \'Personer\':[\'Hans Christian Andersen\']}")
-    val categories: LiveData<String> = _categories
-
-    private val _letters = MutableLiveData("{'A':'HIDDEN'," +
-            "'B':'HIDDEN'," +
-            "'C':'HIDDEN'," +
-            "'D':'HIDDEN'," +
-            "'E':'HIDDEN'," +
-            "'F':'HIDDEN'," +
-            "'G':'HIDDEN'," +
-            "'H':'HIDDEN'," +
-            "'I':'HIDDEN'," +
-            "'J':'HIDDEN'," +
-            "'K':'HIDDEN'," +
-            "'L':'HIDDEN'," +
-            "'M':'HIDDEN'," +
-            "'N':'HIDDEN'," +
-            "'O':'HIDDEN'," +
-            "'P':'HIDDEN'," +
-            "'Q':'HIDDEN'," +
-            "'R':'HIDDEN'," +
-            "'S':'HIDDEN'," +
-            "'T':'HIDDEN'," +
-            "'U':'HIDDEN'," +
-            "'V':'HIDDEN'," +
-            "'W':'HIDDEN'," +
-            "'X':'HIDDEN'," +
-            "'Y':'HIDDEN'," +
-            "'Z':'HIDDEN'," +
-            "'Æ':'HIDDEN'," +
-            "'Ø':'HIDDEN'," +
-            "'Å':'HIDDEN'}")
-    val letters: LiveData<String> = _letters
-
-
 }
