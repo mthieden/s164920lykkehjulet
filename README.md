@@ -19,7 +19,7 @@
 
 | Requirements |   Status      |                                                                                  Explanation |
 |--------------|:-------------:|---------------------------------------------------------------------------------------------:|
-| FR_1         | Not completed |                                 All features has been implementet as seen in the table above |
+| FR_1         |   Completed   |                                 All features has been implementet as seen in the table above |
 | FR_2         |   Completed   |                          The end screen has a button to return to homescreen and start again |
 | NFR_1        |   Completed   |                  The app is comprised of MainActivity, and the fragments: home, game and end |
 | NFR_2        |   Completed   |           The app uses the navigation component to change between home, game and end screens |
