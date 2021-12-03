@@ -35,8 +35,10 @@ class CategoryRecyclerViewAdapter(private val categories: List<String>)
         holder.itemView.setOnClickListener {
             val data = Bundle()
             val list = JSONcategory.getJSONArray(categories[position])
-            val result = list.getString(Random.nextInt(0, list.length()))
-            data.putString("data", result)
+            val secretWord = list.getString(Random.nextInt(0, list.length()))
+            data.putString("category", categories[position])
+            data.putString("secretWord", secretWord)
+
             Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_gameFragment, data)
         }
     }

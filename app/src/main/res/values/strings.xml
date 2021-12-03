@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">s164920lykkehjulet</string>
     <string name="start_text">Vælg kategori:</string>
-    <string name="category_json">   {\'Film\':[\'En Verden Udenfor\', \'Gøgereden\', \'Gøgereden\'],
+    <string name="category_json">   {\'Film\':[\'En Verden Udenfor\', \'Gøgereden\'],
                                     \'Sport\':[\'Fodbold\'],
                                     \'Personer\':[\'Hans Christian Andersen\', \'Sidney Lee\', \'Lars Larsen\', \'alexander nevsky\'],
                                     \'Mad\':[\'PizzaBurger fra dr Oetker\'],

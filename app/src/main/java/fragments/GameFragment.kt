@@ -63,12 +63,14 @@ class GameFragment : Fragment() {
         val categories = listOf<String>("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Æ", "Ø", "Å")
 
 
-        val data: String? = arguments?.getString("data")
+        val chosen_word: String? = arguments?.getString("secretWord")
+        val chosen_category: String? = arguments?.getString("category")
 
-        if (data?.length ?: 0 >= 1) {
-            secret_word = data.toString()
-            shown_word = hideWord(data.toString())
+        if ((chosen_word?.length ?: 0 >= 1) and (chosen_category?.length ?: 0 >= 1) ) {
+            secret_word = chosen_word.toString()
+            shown_word = hideWord(chosen_word.toString())
             secretWord.text = shown_word
+            chosenCategory.text="Kategori : $chosen_category"
         }
         else
             secretWord.text = "FEJL"
@@ -93,7 +95,6 @@ class GameFragment : Fragment() {
             data.putString("data", end_text)
             Navigation.findNavController(btn_nav).navigate(R.id.action_gameFragment_to_endFragment,data)
         }
-
     }
 
     private fun playTurn() {

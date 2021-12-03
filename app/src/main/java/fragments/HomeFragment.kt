@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.s164920lykkehjulet.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
 import views.CategoryRecyclerViewAdapter
+import kotlin.random.Random
 
 
 class HomeFragment : Fragment() {
@@ -45,6 +47,17 @@ class HomeFragment : Fragment() {
         // finally, data bind the recycler view with adapter
         val adapter = CategoryRecyclerViewAdapter(categories).apply {
             recyclerView.adapter = this
+        }
+        btn_random.setOnClickListener {
+            val data = Bundle()
+            val ran = Random.nextInt(categories.size);
+            val list = JSONcategory.getJSONArray(categories[ran])
+            val secretWord = list.getString(Random.nextInt(0, list.length()))
+            data.putString("category", categories[ran])
+            data.putString("secretWord", secretWord)
+
+            Navigation.findNavController(btn_random).navigate(R.id.action_homeFragment_to_gameFragment, data)
+
         }
     }
 }
