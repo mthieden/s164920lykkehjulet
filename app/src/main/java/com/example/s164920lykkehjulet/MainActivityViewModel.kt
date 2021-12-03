@@ -5,8 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainActivityViewModel : ViewModel(){
-    private val _secretWord = MutableLiveData("")
-    val secretWord: LiveData<String> = _secretWord
+    private var _guessLetter = MutableLiveData("")
+    var guessLetter: MutableLiveData<String> = _guessLetter
+
+    private var _buttonBool = MutableLiveData(false)
+    var buttonBool: MutableLiveData<Boolean> = _buttonBool
+
 
     private val _categories = MutableLiveData("{\'Film\':[\'Dune\', \'Batman\'],\'Sport\':[\'Fodbold\'], \'Personer\':[\'Hans Christian Andersen\']}")
     val categories: LiveData<String> = _categories

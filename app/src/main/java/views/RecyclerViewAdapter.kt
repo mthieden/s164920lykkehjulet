@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.s164920lykkehjulet.MainActivityViewModel
 import com.example.s164920lykkehjulet.R
 import kotlinx.android.synthetic.main.custom_view.view.*
 
-class RecyclerViewAdapter(private val colors: List<String>)
+class RecyclerViewAdapter(private val colors: List<String>,
+                          private val viewModel: MainActivityViewModel )
     : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflate the custom view from xml layout file
@@ -27,9 +29,13 @@ class RecyclerViewAdapter(private val colors: List<String>)
         // display the current color
         holder.color.text = colors[position]
         holder.itemView.setOnClickListener {
-            it.visibility=View.INVISIBLE
+            if(viewModel.buttonBool.value == true)
+            {
+                viewModel.guessLetter.value=colors[position]
+                it.visibility=View.INVISIBLE
+                viewModel.buttonBool.value =false
+            }
         }
-
     }
 
 

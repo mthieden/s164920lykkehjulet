@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.s164920lykkehjulet.MainActivityViewModel
@@ -30,8 +32,6 @@ class GameFragment : Fragment() {
     var lives = 5
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,12 +40,16 @@ class GameFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_game, container, false)
         Cast(view)
 
-        /*
-        val nameObserver = Observer<String> { newName ->
-            secretWord.text = newName
+        val letterObserver = Observer<String> { newName ->
+            pickLetter(newName)
+            if (lives <= 0) {
+                endGame()
+            } else if ("?" !in shown_word) {
+                endGame()
+            }
         }
-        model.secretWord.observe(viewLifecycleOwner, nameObserver)
-        */
+        model.guessLetter.observe(viewLifecycleOwner, letterObserver)
+
         return view
     }
 
@@ -77,12 +81,11 @@ class GameFragment : Fragment() {
             // specify the layout manager for recycler view
             recyclerView.layoutManager = this
         }
-        val adapter = RecyclerViewAdapter(categories).apply {
+        val adapter = RecyclerViewAdapter(categories, model).apply {
             recyclerView.adapter = this
         }
 
         btn_roll.setOnClickListener {
-            pickLetter("h")
             playTurn()
         }
 
@@ -91,17 +94,17 @@ class GameFragment : Fragment() {
             data.putString("data", end_text)
             Navigation.findNavController(btn_nav).navigate(R.id.action_gameFragment_to_endFragment,data)
         }
+
     }
 
     private fun playTurn() {
-        spinTheWheel()
-        if(lives<=0)
-        {
-            endGame()
-        }
-        else if("?" !in shown_word)
-        {
-            endGame()
+        if(model.buttonBool.value!=true) {
+            spinTheWheel()
+            if (lives <= 0) {
+                endGame()
+            } else if ("?" !in shown_word) {
+                endGame()
+            }
         }
     }
 
@@ -111,17 +114,18 @@ class GameFragment : Fragment() {
             in 1..3 -> {
                 gameText.text="Gæt et bogstav for 2000 point"
                 points= 2000
-                // TODO add active boolean
+                model.buttonBool.value=true
             }
             in 4..8 -> {
                 gameText.text="Gæt et bogstav for 1000 point"
                 points= 1000
+                model.buttonBool.value=true
 
             }
             in 9..15 -> {
                 gameText.text="Gæt et bogstav for 500 point"
                 points= 500
-
+                model.buttonBool.value=true
             }
             16 -> {
                 lives++
@@ -156,25 +160,27 @@ class GameFragment : Fragment() {
         val result = secret_word.replace(regex,"?")
         secretWord.text = result
         shown_word=result
-        if (hit)
-        {
-            // TODO: add text for when a letter is hit
-            totalPoints +=points
-            setPoints()
-        }
-        else
-        {
-            // TODO: add text for miss
-            lives--
-            setLives()
-        }
+        when {
+            letter =="" -> {
+                gameText.text="Velkommen til spillet, tryk på knappen for at komme i gang"
+            }
+            hit -> {
 
+                gameText.text="\""+ letter +"\" er Korrekt"
+                totalPoints +=points
+                setPoints()
+            }
+            else -> {
+                gameText.text="\""+ letter +"\" er Forkert"
+                lives--
+                setLives()
+            }
+        }
     }
 
     private fun endGame() {
-        // TODO: add text
-        gameText.text="END"
-        if(lives == 0)
+        gameText.text="Spillet er slut, tryk på videre for at afslutte"
+        if(lives <= 0)
         {
             end_text = "Du Tabte Spillet :'("
         }
